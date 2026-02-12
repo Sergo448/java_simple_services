@@ -1,0 +1,10 @@
+<!-- TODO: Настрой Maven-проект -->
+<!-- Смотри TASKS.md → Шаг 2 -->
+
+<!-- groupId: com.tutorial -->
+<!-- artifactId: task-manager -->
+<!-- version: 1.0.0 -->
+<!-- java.version: 17 -->
+
+<!-- Зависимости: gson 2.10.1 -->
+<!-- Плагины: maven-jar-plugin (mainClass), maven-shade-plugin (fat jar) -->

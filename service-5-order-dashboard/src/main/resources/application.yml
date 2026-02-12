@@ -1,0 +1,6 @@
+# TODO: Настрой конфигурацию Spring Boot
+# Смотри TASKS.md → Шаг 3
+
+# server.port: 8085
+# order-generator.url: http://localhost:8084
+#   (в Docker будет: http://order-generator:8084)

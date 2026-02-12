@@ -1,0 +1,15 @@
+<!-- TODO: Настрой Spring Boot Maven-проект -->
+<!-- Смотри TASKS.md → Шаг 2 -->
+
+<!-- parent: spring-boot-starter-parent 3.2.1 -->
+<!-- groupId: com.tutorial -->
+<!-- artifactId: order-generator -->
+<!-- version: 1.0.0 -->
+<!-- java.version: 17 -->
+
+<!-- Зависимости:
+     - spring-boot-starter-web
+     - spring-boot-starter-data-jpa
+     - h2 (runtime)
+-->
+<!-- Плагин: spring-boot-maven-plugin -->

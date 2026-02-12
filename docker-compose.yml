@@ -1,0 +1,9 @@
+# TODO: Настрой docker-compose для запуска всех 5 сервисов
+# Смотри README.md
+
+# services:
+#   hello-service:       порт 8081
+#   task-manager:        порт 8082
+#   user-service:        порт 8083
+#   order-generator:     порт 8084
+#   order-dashboard:     порт 8085 (depends_on: order-generator)

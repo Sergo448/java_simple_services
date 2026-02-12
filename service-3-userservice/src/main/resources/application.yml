@@ -1,0 +1,7 @@
+# TODO: Настрой конфигурацию Spring Boot
+# Смотри TASKS.md → Шаг 3
+
+# server.port: 8083
+# spring.datasource: H2 in-memory
+# spring.jpa: hibernate ddl-auto, show-sql
+# spring.h2.console: enabled
