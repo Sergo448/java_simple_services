@@ -1,25 +1,23 @@
 # ======= Этап 1: Сборка =======
-FROM maven:3.9-eclipse-temurin-17 AS buider
+FROM maven:3.9-eclipse-temurin-22 AS builder
 
-# Рабочая директория внутри контейнера
 WORKDIR /app
 
-# Сначала копируем только pom.xml и скачиваем зависимости
-# Это отдельный слой --- он закешируется, если pom.xml не менялся
+# Копируем только pom.xml для кеширования зависимостей
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
-# Теперь копируем исходный код и собираем
+# Копируем исходный код
 COPY src ./src
 RUN mvn clean package -DskipTests
 
 # ======= Этап 2: Запуск =======
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:22-jre-alpine
 
 WORKDIR /app
 
-# Копируем JAR из этапа сборки
-COPY --from=builder /app/target/*.jar app.jar
+# Копируем shaded jar (Maven Shade заменяет основной jar на shaded версию)
+COPY --from=builder /app/target/hello-service-*.jar app.jar
 
 EXPOSE 8081
 

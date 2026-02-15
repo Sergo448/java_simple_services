@@ -53,7 +53,7 @@ public class MyMathHandler implements HttpHandler {
 
             String jsonResponse = """
                 {
-                  "response": "%s",
+                  "result": %.2f,
                   "service": "math-service",
                   "hostname": "%s",
                   "uptimeSeconds": %d,
@@ -64,7 +64,7 @@ public class MyMathHandler implements HttpHandler {
                   }
                 }
                 """.formatted(
-                response,
+                response.result,
                 hostname,
                 uptimeSeconds,
                 usedMemory,
