@@ -2,3 +2,6 @@
 *.vscode
 *.log
 *.tmp
+
+/target/
+**/target/

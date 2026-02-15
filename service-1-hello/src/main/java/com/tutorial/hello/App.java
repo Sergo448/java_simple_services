@@ -1,13 +1,28 @@
 package com.tutorial.hello;
 
-// TODO: Реализуй главный класс — точка входа приложения
-// Смотри TASKS.md → Шаг 3
+import com.tutorial.hello.handlers.HealthHandler;
+import com.tutorial.hello.handlers.HelloHandler;
+import com.tutorial.hello.handlers.TimeHandler;
+import com.tutorial.hello.handlers.MyMathHandler;
 
+import java.net.InetSocketAddress;
+import java.net.http.HttpClient;
+import com.sun.net.httpserver.HttpServer;
 public class App {
 
     public static void main(String[] args) {
-        // TODO: создай HttpServer на порту 8081
-        // TODO: зарегистрируй обработчики для /hello, /time, /health
-        // TODO: запусти сервер
+        try {
+            HttpServer server = HttpServer.create(new InetSocketAddress(8081), 0);
+            
+            server.createContext("/hello", new HelloHandler());
+            server.createContext("/time", new TimeHandler());
+            server.createContext("/health", new HealthHandler());
+            server.createContext("/math", new MyMathHandler());
+            
+            server.setExecutor(null); // creates a default executor
+            server.start();
+        } catch (Exception e) {
+            e.printStackTrace();    
+        }
     }
 }
