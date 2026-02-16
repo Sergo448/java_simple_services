@@ -121,10 +121,67 @@ public class TaskHandler implements HttpHandler {
     private void handleGetAll (HttpExchange exchange)
         throws IOException {
             try {
-                List<Task> tasks = storage.findAll();
-                Map<String, Object> response = new HashMap<>();
-                response.put("tasks", tasks);
-                sendResponse(exchange, 200, gson.toJson(response));
+                // Извлекаем query параметры
+                String query = exchange.getRequestURI().getQuery();
+                String titleFilter = null;
+                Boolean completedFilter = null;
+                String sortBy = "id";
+                String order = "asc";
+                int page = 0;
+                int size = Integer.MAX_VALUE;
+
+                if (query != null && !query.isEmpty()) {
+                    String[] params = query.split("&");
+                    for (String param : params) {
+                        String[] keyValue = param.split("=", 2);
+                        if (keyValue.length == 2) {
+                            String key = keyValue[0];
+                            String value = keyValue[1];
+
+                            switch (key) {
+                                case "title":
+                                    titleFilter = java.net.URLDecoder.decode(value, StandardCharsets.UTF_8);
+                                    break;
+                                case "completed":
+                                    completedFilter = Boolean.parseBoolean(value);
+                                    break;
+                                case "sortBy":
+                                    sortBy = value;
+                                    break;
+                                case "order":
+                                    order = value.toLowerCase();
+                                    break;
+                                case "page":
+                                    try {
+                                        page = Integer.parseInt(value);
+                                        if (page < 0) page = 0;
+                                    } catch (NumberFormatException e) {
+                                        page = 0;
+                                    }
+                                    break;
+                                case "size":
+                                    try {
+                                        size = Integer.parseInt(value);
+                                        if (size <= 0) size = 10;
+                                    } catch (NumberFormatException e) {
+                                        size = 10;
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                Map<String, Object> result = storage.findAll(
+                    titleFilter,
+                    completedFilter,
+                    sortBy,
+                    order,
+                    page,
+                    size
+                );
+
+                sendResponse(exchange, 200, gson.toJson(result));
             } catch (Exception e) {
                 sendResponse(exchange, 500, buildInternalServerError(e.getMessage()));
             }
