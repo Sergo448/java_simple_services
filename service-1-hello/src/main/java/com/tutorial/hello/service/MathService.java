@@ -6,13 +6,13 @@ public class MathService {
 
         double result;
 
-        if (operation == "+") {
+        if ("+".equals(operation)) {
             result = a + b;
-        } else if (operation == "-") {
+        } else if ("-".equals(operation)) {
             result = a - b;
-        } else if (operation == "*") {
+        } else if ("*".equals(operation)) {
             result = a * b;
-        } else if (operation == "/") {
+        } else if ("/".equals(operation)) {
             if (b == 0 || b == 0.0 || b == Double.NaN || b == Double.POSITIVE_INFINITY || b == Double.NEGATIVE_INFINITY) {
                 throw new IllegalArgumentException("Division by zero");
             }
