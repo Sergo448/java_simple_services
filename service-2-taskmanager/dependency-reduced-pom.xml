@@ -39,7 +39,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.tutorial.hello.App</mainClass>
+                  <mainClass>com.tutorial.taskmanager.App</mainClass>
                 </transformer>
               </transformers>
             </configuration>
