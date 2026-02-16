@@ -1,6 +1,5 @@
 package com.tutorial.taskmanager;
 
-import java.net.http.HttpClient;
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
 import java.io.IOException;

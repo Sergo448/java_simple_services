@@ -22,8 +22,6 @@ import com.sun.net.httpserver.HttpHandler;
 import com.tutorial.taskmanager.model.Task;
 import com.tutorial.taskmanager.storage.TaskStorage;
 
-import netscape.javascript.JSObject;
-
 
 public class TaskHandler implements HttpHandler {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -60,12 +58,12 @@ public class TaskHandler implements HttpHandler {
                 sendResponse(exchange, 500, buildInternalServerError(e.getMessage()));
             }
         } else {
-            if ("GET".equalsIgnoreCase(path) && "GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+            if ("GET".equalsIgnoreCase(exchange.getRequestMethod())) {
                 handleGetAll(exchange);
-            } else if ("POST".equalsIgnoreCase(path) && "POST".equalsIgnoreCase(exchange.getRequestMethod())) {
+            } else if ("POST".equalsIgnoreCase(exchange.getRequestMethod())) {
                 handleCreate(exchange);
             } else {
-                sendResponse(exchange, 404, buildNotFound());
+                sendResponse(exchange, 405, buildMethodNotAllowed());
             }
         }
     }
@@ -120,17 +118,14 @@ public class TaskHandler implements HttpHandler {
             }
         }
 
-    private void handleGetAll (HttpExchange exchange) 
+    private void handleGetAll (HttpExchange exchange)
         throws IOException {
             try {
-                String body = readRequestBody(exchange);
-                JsonObject json = JsonParser.parseString(body).getAsJsonObject();
-
                 List<Task> tasks = storage.findAll();
                 Map<String, Object> response = new HashMap<>();
                 response.put("tasks", tasks);
                 sendResponse(exchange, 200, gson.toJson(response));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 sendResponse(exchange, 500, buildInternalServerError(e.getMessage()));
             }
         }
@@ -190,7 +185,8 @@ public class TaskHandler implements HttpHandler {
                 {
                   "error": "Method Not Allowed",
                   "message": "Supported methods: GET, POST, PUT, DELETE"
-                  """;
+                }
+                """;
         }
     private String buildBadRequest(String message) {
         return String.format("""

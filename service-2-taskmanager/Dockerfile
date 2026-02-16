@@ -19,6 +19,6 @@ WORKDIR /app
 # Копируем shaded jar (Maven Shade заменяет основной jar на shaded версию)
 COPY --from=builder /app/target/task-manager-*.jar app.jar
 
-EXPOSE 8081
+EXPOSE 8082
 
 CMD ["java", "-jar", "app.jar"]
