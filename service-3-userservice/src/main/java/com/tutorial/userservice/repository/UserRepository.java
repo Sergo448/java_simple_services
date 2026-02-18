@@ -1,9 +1,13 @@
 package com.tutorial.userservice.repository;
 
-// TODO: Реализуй Spring Data JPA репозиторий
-// Смотри TASKS.md → Шаг 5
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.tutorial.userservice.model.User;
+import java.util.Optional;
 
 // TODO: интерфейс, наследующий JpaRepository<User, Long>
 
-public interface UserRepository {
+public interface UserRepository extends JpaRepository<User, Long> {
+    private void myInit() {
+        System.out.println("# # # UserRepository created # # #");
+    }
 }
