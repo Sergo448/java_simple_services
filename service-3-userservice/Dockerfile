@@ -17,7 +17,7 @@ FROM eclipse-temurin:22-jre-alpine
 WORKDIR /app
 
 # Копируем shaded jar (Maven Shade заменяет основной jar на shaded версию)
-COPY --from=builder /app/target/userservice-*.jar app.jar
+COPY --from=builder /app/target/UserServiceApplication-manager-1.0-SNAPSHOT.jar app.jar
 
 EXPOSE 8083
 

@@ -1,15 +1,12 @@
 package com.tutorial.userservice.service;
 
-import java.util.Optional;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.tutorial.userservice.exception.UserNotFoundException;
 import com.tutorial.userservice.model.User;
 import com.tutorial.userservice.repository.UserRepository;
-
-
-
 
 @Service
 public class UserService {
@@ -17,7 +14,6 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        System.out.println("# # # UserService created # # #");
     }
 
     public List<User> getAllUsers() {
@@ -25,46 +21,37 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        User user = optionalUser.orElseThrow(() -> new RuntimeException("Пользователь не найден с id: " + id));
-        return user;
+        return userRepository.findById(id)
+            .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
     }
 
     public User createUser(User user) {
-        if (userRepository.findByEmail(
-            user.getEmail()).isPresent()) {
-                throw new RuntimeException("Пользователь с email " + user.getEmail() + " уже существует");
-            }
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new RuntimeException("Пользователь с email " + user.getEmail() + " уже существует");
+        }
         return userRepository.save(user);
     }
 
     public User updateUser(Long id, User userUpdate) {
-        if (userRepository.findById(id).isEmpty()) {
-            throw new RuntimeException("Пользователь не найден с id: " + id);
-        }
-        String emailUpdate = userUpdate.getEmail();
-        String nameUpdate = userUpdate.getName();
-        Integer ageUpdate = userUpdate.getAge();
+        User user = userRepository.findById(id)
+            .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
-        User user = userRepository.findById(id).get();
-        if (emailUpdate != null) {
-            user.setEmail(emailUpdate);
+        if (userUpdate.getName() != null) {
+            user.setName(userUpdate.getName());
         }
-        if (nameUpdate != null) {
-            user.setName(nameUpdate);
+        if (userUpdate.getEmail() != null) {
+            user.setEmail(userUpdate.getEmail());
         }
-        if (ageUpdate != null) {
-            user.setAge(ageUpdate);
+        if (userUpdate.getAge() != null) {
+            user.setAge(userUpdate.getAge());
         }
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 
     public void deleteUser(Long id) {
-        if (userRepository.findById(id).isEmpty()) {
-            throw new RuntimeException("Пользователь не найден с id: " + id);
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException("User not found with id: " + id);
         }
         userRepository.deleteById(id);
     }
-
 }

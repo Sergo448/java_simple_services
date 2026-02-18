@@ -11,4 +11,6 @@ spring:
     show-sql: true
   h2:
     console:
-      enables: true
+      enabled: true
+      settings:
+        web-allow-others: true

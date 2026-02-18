@@ -49,17 +49,13 @@ public class User {
     public void setEmail(String email) { this.email = email; }
     public void setAge(Integer age) { this.age = age; }
     
-    public User(
-        Long id, String name, String email, Integer age) {
-            this.id = id;
-            this.name = name;
-            this.email = email;
-            this.age = age;
-            System.out.println("# # # One nore User created # # #");
-            System.out.println(" User id: " + this.id.toString());
-            System.out.println(" User name: " + this.name.toString());
-            System.out.println(" User email: " + this.email.toString());
-            System.out.println(" User age: " + this.age.toString());
-            System.out.println("# # # # # # # # # # # # # # # # # # #");
+    public User() {
+    }
+
+    public User(Long id, String name, String email, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.age = age;
     }
 }
