@@ -1,15 +1,46 @@
 package com.tutorial.ordergen.controller;
 
-// TODO: Реализуй REST-контроллер заказов
-// Смотри TASKS.md → Шаг 8
+import org.springframework.web.bind.annotation.*;
+import com.tutorial.ordergen.service.OrderService;
+import com.tutorial.ordergen.model.Order;
+import java.util.List;
+import java.util.Optional;
+import java.time.LocalDateTime;
 
-// TODO: аннотации @RestController, @RequestMapping("/api/orders")
 
+
+
+
+@RestController
+@RequestMapping("/api/orders")
 public class OrderController {
-    // TODO: внедри OrderService
-    // TODO: эндпоинты:
-    //   GET  /api/orders           → все заказы
-    //   GET  /api/orders/{id}      → заказ по ID
-    //   POST /api/orders           → создание вручную
-    //   GET  /api/orders/new?since=... → новые заказы с указанного времени
+
+    private final OrderService orderService;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    @GetMapping
+    public List<Order> getAll() {
+        return orderService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Order getById(@PathVariable Long id) {
+        return orderService.findById(id)
+            .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
+    }
+
+    @PostMapping
+    public Order create(@RequestBody Order order) {
+        return orderService.create(order);
+    }
+
+    @GetMapping("/new")
+    public List<Order> getNewOrders(
+        @RequestParam("since") String sinceStr) {
+        LocalDateTime since = LocalDateTime.parse(sinceStr);
+        return orderService.findNewSince(since);
+    }
+
 }

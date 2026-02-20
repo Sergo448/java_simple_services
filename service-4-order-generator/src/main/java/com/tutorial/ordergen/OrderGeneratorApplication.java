@@ -1,13 +1,15 @@
 package com.tutorial.ordergen;
 
-// TODO: Главный класс Spring Boot приложения
-// Смотри TASKS.md → Шаг 3
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-// TODO: аннотации @SpringBootApplication, @EnableScheduling
 
+@SpringBootApplication
+@EnableScheduling
 public class OrderGeneratorApplication {
 
     public static void main(String[] args) {
-        // TODO: SpringApplication.run(...)
+        SpringApplication.run(OrderGeneratorApplication.class, args);
     }
 }
