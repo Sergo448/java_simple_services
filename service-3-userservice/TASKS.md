@@ -145,7 +145,7 @@ Maven-проект со следующей структурой:
 
     <!-- 3. Свойства (версия Java) -->
     <properties>
-        <java.version>17</java.version>
+        <java.version>22</java.version>
     </properties>
 
     <!-- 4. Зависимости -->
@@ -158,9 +158,17 @@ Maven-проект со следующей структурой:
 
         <!-- JPA: Hibernate + Spring Data -->
         <!-- artifactId: spring-boot-starter-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
         <!-- Валидация: @NotBlank, @Email и т.д. -->
         <!-- artifactId: spring-boot-starter-validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 
         <!-- H2 база данных (только для runtime, не для компиляции) -->
         <dependency>
